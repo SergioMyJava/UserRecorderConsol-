@@ -18,29 +18,29 @@ public class UserRecorder {
 
     public void run() throws IOException {
         boolean endWorking = false;
-        helloMethod();
         readIt = new BufferedReader(new InputStreamReader(System.in));
 
         while (endWorking == false) {
+            helloMethod();
             String nStr = readIt.readLine();
             if (nStr.equals("1")) {
                 addUser();
+                continue;
             }
-            if (nStr == "2") {
+            if (nStr.equals("2")) {
 
             }
-            if (nStr == "3") {
+            if (nStr.equals("3")) {
 
             }
-            if (nStr == "4") {
+            if (nStr.equals("4")) {
 
             }
-            if (nStr == "Q") {
+            if (nStr.equals("Q") ) {
                 endWorking = true;
             } else {
                 System.out.println("Enter the correct number: 1,2,3 or 4.");
                 System.out.println();
-                helloMethod();
                 continue;
             }
         }
@@ -53,10 +53,10 @@ public class UserRecorder {
         boolean nameRecorded = false;
         while (nameRecorded == false) {
             String nameLastName = readIt.readLine();
-            Pattern pattern = Pattern.compile("[A-Za-z]{1,}\\s[A-Za-z]{1,}");
+            Pattern pattern = Pattern.compile("[A-Za-zА-Яа-я]{1,}\\s[A-Za-zА-Яа-я]{1,}");
             Matcher matcher = pattern.matcher(nameLastName);
             if (matcher.matches()) {
-                writer.write(nameLastName + " | ");
+                writer.write("\n" + nameLastName + " | ");
                 nameRecorded = true;
             } else {
                 System.out.println("Name and surname must consist of letters, and begin with a capital letter.");
