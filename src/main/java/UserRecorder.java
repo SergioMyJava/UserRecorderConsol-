@@ -20,11 +20,12 @@ int numberOfTelefone = 0;
     }
 
     protected boolean writeNumberTel(String telNum) throws IOException {
-        Pattern pattern = Pattern.compile("375[0-9]{2}[\\s][0-9]{7}]");//("375 - первые три цифры "375",[0-9]{2} дальше идут две любые цифры,[\s] - дальше пробел,[0-9]{7} - семь любых цифр")
+        Pattern pattern = Pattern.compile("375[0-9]{2}[\\s][0-9]{7}");//("375 - первые три цифры "375",[0-9]{2} дальше идут две любые цифры,[\s] - дальше пробел,[0-9]{7} - семь любых цифр")
         Matcher matcher = pattern.matcher(telNum);
         if (matcher.matches()) {
             FileWriter writer = new FileWriter("users.txt", true);
             writer.write(telNum);
+            writer.close();
             return true;
         } else {
             return false;
