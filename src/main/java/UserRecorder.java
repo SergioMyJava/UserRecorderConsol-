@@ -1,14 +1,15 @@
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserRecorder {
     private BufferedReader readIt;
+    private HashMap<String, String> fromTxt = new HashMap<String, String>();
 
-    private void helloMethod(){
+    private void helloMethod() {
         System.out.println("If you want to add a user, press '1' .");
         System.out.println("If you want to see all users, press '2' .");
         System.out.println("if you want to delete the user press '3' .");
@@ -28,15 +29,19 @@ public class UserRecorder {
                 continue;
             }
             if (nStr.equals("2")) {
-
+                getAllUsers();
+                continue;
             }
             if (nStr.equals("3")) {
-
+                System.out.println("Enter the name of the user you want to delete");
+                String nameDel = readIt.readLine();
+                deleteUser(nameDel);
+                continue;
             }
             if (nStr.equals("4")) {
 
             }
-            if (nStr.equals("Q") ) {
+            if (nStr.equals("Q")) {
                 endWorking = true;
             } else {
                 System.out.println("Enter the correct number: 1,2,3 or 4.");
@@ -53,7 +58,7 @@ public class UserRecorder {
         boolean nameRecorded = false;
         while (nameRecorded == false) {
             String nameLastName = readIt.readLine();
-            Pattern pattern = Pattern.compile("[A-Za-zА-Яа-я]{1,}\\s[A-Za-zА-Яа-я]{1,}");
+            Pattern pattern = Pattern.compile("[A-ZА-Я]{1}[a-zа-я]{1,}\\s[A-ZА-Я]{1}[a-zа-я]{1,}");
             Matcher matcher = pattern.matcher(nameLastName);
             if (matcher.matches()) {
                 writer.write("\n" + nameLastName + " | ");
@@ -80,12 +85,16 @@ public class UserRecorder {
                 System.out.println("You entered the phone number incorrectly. Check that after the code there is a space 375 ** space *******.");
                 continue;
             }
-
-            System.out.println("You can enter " + (3 - numberOfPhonesRecorded) + " more numbers. Y/N");
-            String unswer = readIt.readLine();
-            if (unswer.equals("Y")) {
-                continue;
-            } else {
+            if (numberOfPhonesRecorded < 3) {
+                System.out.println("You can enter " + (3 - numberOfPhonesRecorded) + " more numbers. Y/N");
+                String unswer = readIt.readLine();
+                if (unswer.equals("Y") && numberOfPhonesRecorded < 3) {
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            else {
                 break;
             }
         }
@@ -113,17 +122,75 @@ public class UserRecorder {
             writer.write(role + "|");
             roleAdd = true;
             rolesAdded++;
-            System.out.println("Do you wont to added another role? Y/N");
-            String answer = readIt.readLine();
-            if(answer.equals("Y")){
-                continue;
+            if(rolesAdded<3) {
+                System.out.println("You can add"+(3-rolesAdded) +" role? Y/N");
+                String answer = readIt.readLine();
+                if (answer.equals("Y")) {
+                    continue;
+                } else {
+                    break;
+                }
             }
             else{
-                System.out.println("All user parameters are filled in. The user is added to the list.");
-                writer.close();
                 break;
             }
         }
+        System.out.println("All user parameters are filled in. The user is added to the list.");
+        writer.close();
+        System.out.println();
         return;
+    }
+
+    private void getAllUsers() throws FileNotFoundException {
+        fromTxtToMap();
+        for (Map.Entry entry : fromTxt.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        System.out.println();
+    }
+
+    private void fromTxtToMap() throws FileNotFoundException {
+        FileReader reader = new FileReader("users.txt");
+        Scanner scanner = new Scanner(reader);
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            char[] charLine = line.toCharArray();
+            boolean firstLimit = false;
+            for (int i = 0; i < charLine.length; i++) {
+                if (charLine[i] == '|' && firstLimit == false) {
+                    String name = line.substring(0, i);
+                    String otherInformation = line.substring(i, charLine.length);
+                    firstLimit = true;
+                    fromTxt.put(name, otherInformation);
+                }
+            }
+        }
+    }
+
+    private void deleteUser(String nameDel) throws IOException {
+        fromTxtToMap();
+        if (fromTxt.containsKey(nameDel)) {
+            fromTxt.remove(nameDel);
+            clearTxt();
+            rightMapToTxt();
+            System.out.println(nameDel + " deleted .");
+        }
+    }
+
+    private void rightMapToTxt() throws IOException {
+        clearTxt();
+        FileWriter writer = new FileWriter("users.txt", true);
+        for (Map.Entry entry : fromTxt.entrySet()) {
+            writer.write("\n" + entry.getKey());
+            writer.write((String) entry.getValue());
+        }
+        writer.close();
+    }
+
+    private void clearTxt() throws IOException {
+        FileWriter clear = new FileWriter("users.txt");
+        clear.write("");
+        clear.close();
     }
 }
