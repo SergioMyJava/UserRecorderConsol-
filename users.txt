@@ -2,3 +2,4 @@
 Pavel Plushkin| 37511 1234567|37522 1234567|37533 1234567|swap@mail.ru|golubok|
 Pavel Pukin| 37511 1234567|haran@mai.ru|sarsfan|rfran|nsd|
 Valerik Ivankov| 37533 1234567 | 37544 1234567 | someMail@mail.ru | rolOne | rolTwo |
+name:Sergio|LastName:Spiridovich| PhoneNumber:[37511 2449037|37522 1234567|37533 1234567|]Email:valera@mail.ru|Role:[sambuka|garage|houk|]

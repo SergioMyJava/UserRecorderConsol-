@@ -54,24 +54,41 @@ public class UserRecorder {
     private void addUser() throws IOException {
         FileWriter writer = new FileWriter("users.txt", true);
 
-        System.out.println("Enter first and last name with a space");
+        System.out.println("Enter the first name .");
         boolean nameRecorded = false;
+        writer.write("\n" +"Name:");
         while (nameRecorded == false) {
-            String nameLastName = readIt.readLine();
-            Pattern pattern = Pattern.compile("[A-ZА-Я]{1}[a-zа-я]{1,}\\s[A-ZА-Я]{1}[a-zа-я]{1,}");
-            Matcher matcher = pattern.matcher(nameLastName);
+            String name = readIt.readLine();
+            Pattern pattern = Pattern.compile("[A-ZА-Я]{1}[a-zа-я]{1,}");
+            Matcher matcher = pattern.matcher(name);
             if (matcher.matches()) {
-                writer.write("\n" + nameLastName + " | ");
+                writer.write(name + "|");
                 nameRecorded = true;
             } else {
-                System.out.println("Name and surname must consist of letters, and begin with a capital letter.");
+                System.out.println("Name must consist of letters, and begin with a capital letter.");
                 continue;
             }
         }
 
+        System.out.println("Enter the surname .");
+        boolean surnameRecorded = false;
+        writer.write("LastName:");
+        while (surnameRecorded == false) {
+            String surname = readIt.readLine();
+            Pattern pattern = Pattern.compile("[A-ZА-Я]{1}[a-zа-я]{1,}");
+            Matcher matcher = pattern.matcher(surname);
+            if (matcher.matches()) {
+                writer.write(surname + "|");
+                surnameRecorded = true;
+            } else {
+                System.out.println("Surname must consist of letters, and begin with a capital letter.");
+                continue;
+            }
+        }
 
         Boolean numberRecorded = false;
         int numberOfPhonesRecorded = 0;
+        writer.write("PhoneNumber:[");
         while (numberRecorded == false || numberOfPhonesRecorded < 3) {
             System.out.println("Enter telephone number. Example : 375** ******* .");
             String telNumber = readIt.readLine();
@@ -91,16 +108,19 @@ public class UserRecorder {
                 if (unswer.equals("Y") && numberOfPhonesRecorded < 3) {
                     continue;
                 } else {
+                    writer.write("]");
                     break;
                 }
             }
             else {
+                writer.write("]");
                 break;
             }
         }
 
         System.out.println("Enter email");
         boolean mailRightAdd = false;
+        writer.write("Email:");
         while (mailRightAdd == false) {
             String mail = readIt.readLine();
             Pattern pattern = Pattern.compile("([a-zA-Z_0-9]{1,})+@([a-zA-Z_0-9]{1,}+\\.[a-z]{2,4})");//("375 - первые три цифры "375",[0-9]{2} дальше идут две любые цифры,[\s] - дальше пробел,[0-9]{7} - семь любых цифр")
@@ -116,6 +136,7 @@ public class UserRecorder {
 
         boolean roleAdd = false;
         int rolesAdded = 0;
+        writer.write("Role:[");
         while (roleAdd == false || rolesAdded < 3) {
             System.out.println("Enter role");
             String role = readIt.readLine();
@@ -128,10 +149,12 @@ public class UserRecorder {
                 if (answer.equals("Y")) {
                     continue;
                 } else {
+                    writer.write("]");
                     break;
                 }
             }
             else{
+                writer.write("]");
                 break;
             }
         }
@@ -175,6 +198,7 @@ public class UserRecorder {
             clearTxt();
             rightMapToTxt();
             System.out.println(nameDel + " deleted .");
+            System.out.println();
         }
     }
 
