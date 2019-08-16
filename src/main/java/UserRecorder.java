@@ -136,7 +136,7 @@ public class UserRecorder {
 
         boolean roleAdd = false;
         int rolesAdded = 0;
-        writer.write("Role:[");
+        writer.write("Role:[|");
         while (roleAdd == false || rolesAdded < 3) {
             System.out.println("Enter role");
             String role = readIt.readLine();

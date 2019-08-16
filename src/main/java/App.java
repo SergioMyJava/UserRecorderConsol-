@@ -39,8 +39,10 @@ public class App {
 //            }
 //        }
 
-       UserRecorder test = new UserRecorder();
-       test.run();
+//       UserRecorder test = new UserRecorder();
+//       test.run();
 
+        ForTest t = new ForTest();
+        t.fromTxtToHashMap();
     }
 }
