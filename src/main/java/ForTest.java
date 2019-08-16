@@ -1,9 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class ForTest {
         public HashMap<String,String> fromTxt = new HashMap<String, String>();
@@ -15,7 +12,7 @@ public class ForTest {
         while (scanner.hasNextLine()){
             String name;
             String lastName;
-            List<String> phoneNumber;
+            List<String> phoneNumber = new LinkedList<String>();
             String mail;
             List<String> rol;
             String line = scanner.nextLine();
@@ -39,12 +36,20 @@ public class ForTest {
                         passageNumber++;
                         continue;
                     }
-                    if(charLine[i] == '[' && passageNumber == 2){
-                        for() {
-                            while (charLine[i] == ']') {
 
+                    if(charLine[i] == '[' && passageNumber == 2){
+                        for(int y = i;y<charLine.length;y++) {
+
+                                if(charLine[y] == '|'){
+                                    String number = line.substring(y-13,y-1);
+                                    phoneNumber.add(number);
+                                }
+                            if (charLine[y] == ']') {
+                                passageNumber++;
+                                break;
                             }
                         }
+                        continue;
                     }
                 }
         }
