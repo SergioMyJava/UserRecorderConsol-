@@ -1,3 +1,5 @@
-
-name:Sergio|LastName:Spiridovich|PhoneNumber:[37511 2449037|37522 1234567|37533 1234567|]Email:valera@mail.ru|Role:[|sambuka|garage|houk|]
-name:Vana|LastName:Irvinov|PhoneNumber:[37511 1234567|37522 1234567|]Email:vana@mail.ru|Role:[|sambuka|garage|]
+Name:Sergio| LastName:Serginio| PhoneNumber:[37520 1234567|37511 1234567|] Mail:gurinivich@mail.ru| Role:[mug|man|]
+Name:Repa| LastName:Kartunkov| PhoneNumber:[37529 1234567|37566 1234567|37577 1234567|] Mail:bidlachok2000@mail.ru| Role:[buba|slesar|]
+Name:Anton| LastName:Ushi| PhoneNumber:[37529 1234567|37522 1234567|] Mail:futurama@mail.ru| Role:[father|brother|vodolath|]
+Name:Alexandra| LastName:Kovtun| PhoneNumber:[37525 5400948|37522 1234567|37533 1234567|] Mail:regula@mail.ru| Role:[mother|women4|good women|]
+Name:Ffghsfd|LastName:Acwd|PhoneNumber:[37511 1234567|]Email:cdskj@sc.ru|Role:[papa|mama|Ya|]

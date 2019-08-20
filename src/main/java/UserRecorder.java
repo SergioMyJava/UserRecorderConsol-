@@ -1,13 +1,11 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserRecorder {
     private BufferedReader readIt;
-    private HashMap<String, String> fromTxt = new HashMap<String, String>();
+    private HashMap<String, User> fromTxt = new HashMap();
 
     private void helloMethod() {
         System.out.println("If you want to add a user, press '1' .");
@@ -30,6 +28,7 @@ public class UserRecorder {
             }
             if (nStr.equals("2")) {
                 getAllUsers();
+                System.out.println();
                 continue;
             }
             if (nStr.equals("3")) {
@@ -56,7 +55,7 @@ public class UserRecorder {
 
         System.out.println("Enter the first name .");
         boolean nameRecorded = false;
-        writer.write("\n" +"Name:");
+        writer.write("Name:");
         while (nameRecorded == false) {
             String name = readIt.readLine();
             Pattern pattern = Pattern.compile("[A-ZА-Я]{1}[a-zа-я]{1,}");
@@ -65,7 +64,7 @@ public class UserRecorder {
                 writer.write(name + "|");
                 nameRecorded = true;
             } else {
-                System.out.println("Name must consist of letters, and begin with a capital letter.");
+                System.out.println("Name must consist of letters, and begin with a capital letter.Try again.");
                 continue;
             }
         }
@@ -81,7 +80,7 @@ public class UserRecorder {
                 writer.write(surname + "|");
                 surnameRecorded = true;
             } else {
-                System.out.println("Surname must consist of letters, and begin with a capital letter.");
+                System.out.println("Surname must consist of letters, and begin with a capital letter.Try again.");
                 continue;
             }
         }
@@ -99,7 +98,7 @@ public class UserRecorder {
                 numberRecorded = true;
                 numberOfPhonesRecorded++;
             } else {
-                System.out.println("You entered the phone number incorrectly. Check that after the code there is a space 375 ** space *******.");
+                System.out.println("You entered the phone number incorrectly. Check that after the code there is a space 375 ** space *******.Try again . ");
                 continue;
             }
             if (numberOfPhonesRecorded < 3) {
@@ -129,14 +128,14 @@ public class UserRecorder {
                 writer.write(mail + "|");
                 mailRightAdd = true;
             } else {
-                System.out.println("Not correct mail");
+                System.out.println("Not correct mail. Example '****@****.***' .Try again.");
                 continue;
             }
         }
 
         boolean roleAdd = false;
         int rolesAdded = 0;
-        writer.write("Role:[|");
+        writer.write("Role:[");
         while (roleAdd == false || rolesAdded < 3) {
             System.out.println("Enter role");
             String role = readIt.readLine();
@@ -144,17 +143,17 @@ public class UserRecorder {
             roleAdd = true;
             rolesAdded++;
             if(rolesAdded<3) {
-                System.out.println("You can add"+(3-rolesAdded) +" role? Y/N");
+                System.out.println("You can add "+(3-rolesAdded) +" role? Y/N");
                 String answer = readIt.readLine();
                 if (answer.equals("Y")) {
                     continue;
                 } else {
-                    writer.write("]");
+                    writer.write("]"+"\n" );
                     break;
                 }
             }
             else{
-                writer.write("]");
+                writer.write("]"+"\n" );
                 break;
             }
         }
@@ -163,51 +162,128 @@ public class UserRecorder {
         System.out.println();
         return;
     }
-
     private void getAllUsers() throws FileNotFoundException {
-        fromTxtToMap();
-        for (Map.Entry entry : fromTxt.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
+        fromTxtToHashMap();
+        for(User user : fromTxt.values()){
+            System.out.println(user.toString());
         }
-        System.out.println();
     }
 
-    private void fromTxtToMap() throws FileNotFoundException {
+    public void fromTxtToHashMap() throws FileNotFoundException {
         FileReader reader = new FileReader("users.txt");
         Scanner scanner = new Scanner(reader);
 
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            char[] charLine = line.toCharArray();
-            boolean firstLimit = false;
-            for (int i = 0; i < charLine.length; i++) {
-                if (charLine[i] == '|' && firstLimit == false) {
-                    String name = line.substring(0, i);
-                    String otherInformation = line.substring(i, charLine.length);
-                    firstLimit = true;
-                    fromTxt.put(name, otherInformation);
-                }
-            }
+            String lineFromTxt = scanner.nextLine();
+            User notYetAdded = workWithLine(lineFromTxt);
+            String key = notYetAdded.getName() + " " + notYetAdded.getLastName();
+            fromTxt.put(key,notYetAdded);
         }
     }
 
+    public User workWithLine(String line){
+        User newUser = null;
+        String name = null;
+        String lastName = null;
+        List<String> phoneNumberList = new LinkedList();
+        String mail = null;
+        List<String> rolList = new LinkedList();
+        int step =1;
+        String workingLine = line;
+        while (line.length()>2){
+            if(step == 1){
+                name = takeNecessary(workingLine,':','|');
+                workingLine = takeUnnecessary(workingLine,'|');
+                step++;
+                continue;
+            }
+            if(step == 2){
+                lastName = takeNecessary(workingLine,':','|');
+                workingLine = takeUnnecessary(workingLine,'|');
+                step++;
+                continue;
+            }
+            if(step == 3){
+                String allPhoneFromWorkList = takeNecessary(workingLine,'[',']');
+                phoneNumberList = pickList(allPhoneFromWorkList,phoneNumberList);
+                workingLine = takeUnnecessary(workingLine,']');
+                step++;
+                continue;
+            }
+            if(step == 4){
+                mail = takeNecessary(workingLine,':','|');
+                workingLine = takeUnnecessary(workingLine,'|');
+                step++;
+                continue;
+            }
+            if(step == 5){
+                String allRoleFromWorkList = takeNecessary(workingLine,'[',']');
+                rolList = pickList(allRoleFromWorkList,rolList);
+                workingLine = takeUnnecessary(workingLine,']');
+                step++;
+                continue;
+            }
+            if(workingLine.length() == 0){
+                break;
+            }
+        }
+        if(workingLine.length() == 0)
+            newUser = new User(name,lastName,phoneNumberList,mail,rolList);
+        return newUser;
+    }
+
+    public String takeNecessary(String line,char first,char next){
+        int indexColon = line.indexOf(first);
+        int indexStick = line.indexOf(next);
+        String nextString = line.substring(indexColon+1,indexStick);
+        return nextString;
+    }
+
+    public String takeUnnecessary(String line,char unit){
+        String workingLine = line.substring(line.indexOf(unit)+1);
+        return workingLine;
+    }
+
+    public List pickList(String line,List list){
+        List listIn = list;
+        String lineIn = line;
+        while (lineIn.length() != 0){
+            String number = lineIn.substring(0,lineIn.indexOf('|'));
+            listIn.add(number);
+            lineIn = lineIn.substring(lineIn.indexOf('|')+1);
+
+            if(lineIn.length() == 0){
+                return listIn;
+            }
+        }
+        return listIn;
+    }
+
     private void deleteUser(String nameDel) throws IOException {
-        fromTxtToMap();
+        fromTxtToHashMap();
         if (fromTxt.containsKey(nameDel)) {
             fromTxt.remove(nameDel);
-            clearTxt();
             rightMapToTxt();
             System.out.println(nameDel + " deleted .");
             System.out.println();
         }
+        else{
+            System.out.println("The name is entered incorrectly or this name does not exist.");
+        }
     }
 
-    private void rightMapToTxt() throws IOException {
+            private void rightMapToTxt() throws IOException {
         clearTxt();
         FileWriter writer = new FileWriter("users.txt", true);
         for (Map.Entry entry : fromTxt.entrySet()) {
-            writer.write("\n" + entry.getKey());
-            writer.write((String) entry.getValue());
+            User fromMap = (User) entry.getValue();
+            String name = fromMap.getName();
+            String lastName = fromMap.getLastName();
+            String phone = getStringFromList(fromMap.getPhoneNumber());
+            String mail = fromMap.getMail();
+            String rol = getStringFromList(fromMap.getRol());
+            writer.write("Name:" + name + "|" +" LastName:" + lastName + "|" + " PhoneNumber:" + phone +
+                    " Mail:" + mail + "|" + " Role:" + rol + "\n" );
         }
         writer.close();
     }
@@ -216,5 +292,13 @@ public class UserRecorder {
         FileWriter clear = new FileWriter("users.txt");
         clear.write("");
         clear.close();
+    }
+
+    public String getStringFromList(List<String> list){
+        String stringForReturn = "[";
+        for(String a : list){
+            stringForReturn += a + "|";
+        }
+        return stringForReturn + "]";
     }
 }
