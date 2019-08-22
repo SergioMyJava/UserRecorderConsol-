@@ -1,5 +1,2 @@
-Name:Sergio| LastName:Serginio| PhoneNumber:[37520 1234567|37511 1234567|] Mail:gurinivich@mail.ru| Role:[mug|man|]
-Name:Repa| LastName:Kartunkov| PhoneNumber:[37529 1234567|37566 1234567|37577 1234567|] Mail:bidlachok2000@mail.ru| Role:[buba|slesar|]
-Name:Anton| LastName:Ushi| PhoneNumber:[37529 1234567|37522 1234567|] Mail:futurama@mail.ru| Role:[father|brother|vodolath|]
-Name:Alexandra| LastName:Kovtun| PhoneNumber:[37525 5400948|37522 1234567|37533 1234567|] Mail:regula@mail.ru| Role:[mother|women4|good women|]
-Name:Ffghsfd|LastName:Acwd|PhoneNumber:[37511 1234567|]Email:cdskj@sc.ru|Role:[papa|mama|Ya|]
+Name:Kaka| LastName:Bukaka| PhoneNumber:[37522 1234567|37522 1234567|37533 1234567|] Mail:armer@muna.re| Role:[future|]
+Name:Sergio| LastName:Fabiany| PhoneNumber:[37511 1234567|] Mail:pe@mai.ru| Role:[haker|painter|bakluheBey|]
