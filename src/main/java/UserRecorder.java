@@ -180,7 +180,7 @@ public class UserRecorder {
         }
     }
 
-    public void fromTxtToHashMap() throws FileNotFoundException {
+    private void fromTxtToHashMap() throws FileNotFoundException {
         FileReader reader = new FileReader("users.txt");
         Scanner scanner = new Scanner(reader);
 
@@ -192,7 +192,7 @@ public class UserRecorder {
         }
     }
 
-    public User workWithLine(String line) {
+    private User workWithLine(String line) {
         User newUser = null;
         String name = null;
         String lastName = null;
@@ -243,19 +243,19 @@ public class UserRecorder {
         return newUser;
     }
 
-    public String takeNecessary(String line, char first, char next) {
+    private String takeNecessary(String line, char first, char next) {
         int indexColon = line.indexOf(first);
         int indexStick = line.indexOf(next);
         String nextString = line.substring(indexColon + 1, indexStick);
         return nextString;
     }
 
-    public String takeUnnecessary(String line, char unit) {
+    private String takeUnnecessary(String line, char unit) {
         String workingLine = line.substring(line.indexOf(unit) + 1);
         return workingLine;
     }
 
-    public List pickList(String line, List list) {
+    private List pickList(String line, List list) {
         List listIn = list;
         String lineIn = line;
         while (lineIn.length() != 0) {
