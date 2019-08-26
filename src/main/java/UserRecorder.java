@@ -344,7 +344,7 @@ public class UserRecorder {
 
                 }
                 if (answer.equals("5")) {
-                    userForChange = changeRol(userForChange);
+                    userForChange = changeRole(userForChange);
                 }
                 if (answer.equals("Q")) {
                     clearTxt();
@@ -483,7 +483,7 @@ public class UserRecorder {
         return toBeChanged;
     }
 
-    private User changeRol(User userForChange) throws IOException {
+    private User changeRole(User userForChange) throws IOException {
         User toBeChanged = userForChange;
         Boolean changeRole = false;
         while (changeRole == false) {
