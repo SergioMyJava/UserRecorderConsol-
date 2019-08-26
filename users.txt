@@ -1,2 +1,1 @@
-Name:Kaka| LastName:Bukaka| PhoneNumber:[37522 1234567|37522 1234567|37533 1234567|] Mail:armer@muna.re| Role:[future|]
-Name:Sergio| LastName:Fabiany| PhoneNumber:[37511 1234567|] Mail:pe@mai.ru| Role:[haker|painter|bakluheBey|]
+Name:Monster|LastName:Monstrovich|PhoneNumber:[37511 1234567|37522 1234567|]Email:monstrovich@mail.ru|Role:[grandmather|]
